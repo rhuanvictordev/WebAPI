@@ -1,0 +1,21 @@
+﻿@model List<WebAPI.Models.Usuario>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.Id</td>
+                    <td>@usuario.Nome</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
