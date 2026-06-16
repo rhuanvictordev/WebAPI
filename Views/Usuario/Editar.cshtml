@@ -1,0 +1,16 @@
+﻿@using WebAPI.Models
+@model Usuario
+@{
+    ViewData["Title"] = "Edição de Usuário";
+}
+
+
+<a class="btn btn-secondary" asp-controller="Usuario" asp-action="Listar">Voltar</a>
+
+<form asp-controller="Usuario" asp-action="Editar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <h3>Nome: </h3>
+    <input asp-for="Nome" class="form-control" placeholder="Digite o nome" required />
+    <button type="submit" class="btn btn-primary">Salvar</button>
+
+</form>

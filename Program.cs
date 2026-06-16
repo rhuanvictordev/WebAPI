@@ -9,7 +9,6 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<DBConnection>();
             builder.Services.AddScoped<UsuarioRepository>();
@@ -18,7 +17,6 @@ namespace WebAPI
 
             var app = builder.Build();
 
-            
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
@@ -32,7 +30,6 @@ namespace WebAPI
             app.UseSwaggerUI();
             app.UseAuthorization();
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
             app.Run();
         }
     }

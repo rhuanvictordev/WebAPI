@@ -1,21 +1,43 @@
 ﻿@model List<WebAPI.Models.Usuario>
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var usuario in Model)
-            {
-                <tr>
-                    <td>@usuario.Id</td>
-                    <td>@usuario.Nome</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+@{
+    ViewData["Title"] = "Listagem de Usuários";
+}
+
+<a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Voltar</a>
+
+<br/> <br />
+<div class="d-flex flex-row gap-4">
+    <h2>Usuários Cadastrados</h2>
+    <a class="btn btn-primary d-flex align-items-center" asp-controller="Usuario" asp-action="Cadastrar">Cadastrar</a>
 </div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th class="text-center">Opções</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Id</td>
+                <td>@usuario.Nome</td>
+                <td class="text-center">
+                    <a class="btn btn-info" asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id">Editar</a>
+                    <form asp-controller="Usuario" asp-action="Remover" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@usuario.Id" />
+
+                        <button type="submit" class="btn btn-danger">
+                            Apagar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

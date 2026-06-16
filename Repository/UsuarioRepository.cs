@@ -17,7 +17,17 @@ namespace WebAPI.Repository
 
         public bool Atualizar(Usuario novoUsuario)
         {
-            throw new NotImplementedException();
+            using (var conn = _connection.CreateConnection())
+            {
+                var command = conn.CreateCommand();
+                command.CommandText = "UPDATE USUARIOS SET NOME = :nome WHERE IDUSUARIO = :id";
+                command.Parameters.Add("nome", novoUsuario.Nome);
+                command.Parameters.Add("id", novoUsuario.Id);
+                int afetado = command.ExecuteNonQuery();
+                if (afetado > 0)
+                    return true;
+            }
+            return false;
         }
 
 
@@ -57,7 +67,7 @@ namespace WebAPI.Repository
                 using (var conn = _connection.CreateConnection())
                 {
                     var command = conn.CreateCommand();
-                    command.CommandText = "SELECT IDUSUARIO,NOME FROM USUARIOS";
+                    command.CommandText = "SELECT IDUSUARIO,NOME FROM USUARIOS ORDER BY IDUSUARIO ASC";
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())

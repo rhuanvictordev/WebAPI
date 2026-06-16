@@ -1,18 +1,17 @@
-﻿@model List<WebAPI.Models.Usuario>
+﻿@using WebAPI.DTOs
+@model UsuarioDTO
+@{
+    ViewData["Title"] = "Cadastro de Usuário";
+}
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Id</td>
-                <td>Nome</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+<a class="btn btn-secondary" asp-controller="Usuario" asp-action="Listar">Voltar</a>
+<h2 class="text-center">Preencha os campos abaixo para cadastrar um usuário</h2>
+
+<form asp-controller="Usuario" asp-action="Cadastrar" method="post">
+    
+    <h3>Nome: </h3>
+    <input asp-for="Nome" class="form-control" placeholder="Digite o nome" required />
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+</form>

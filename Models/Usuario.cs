@@ -2,6 +2,11 @@
 {
     public class Usuario
     {
+        public Usuario()
+        {
+            
+        }
+
         public Usuario(long id, string nome)
         {
             Id = id;
