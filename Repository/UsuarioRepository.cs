@@ -1,5 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using WebAPI.Data;
+using WebAPI.DTOs;
 using WebAPI.Models;
 using WebAPI.Repository.Interfaces;
 
@@ -19,10 +20,33 @@ namespace WebAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Usuario Criar(Usuario usuario)
+
+        public Usuario Criar(UsuarioDTO usuario)
         {
-            throw new NotImplementedException();
+            long idGerado;
+
+            using (var conn = _connection.CreateConnection())
+            {
+                var command = conn.CreateCommand();
+                command.CommandText = "SELECT SEQ_IDUSUARIO.NEXTVAL FROM DUAL";
+                idGerado = Convert.ToInt64(command.ExecuteScalar());
+                
+                command.CommandText = "INSERT INTO USUARIOS (IDUSUARIO, NOME) VALUES (:id, :nome)";
+
+                command.Parameters.Clear();
+                command.Parameters.Add("id", idGerado);
+                command.Parameters.Add("nome", usuario.Nome);
+
+                int afetado = command.ExecuteNonQuery();
+                if (afetado > 0)
+                { 
+                    return new Usuario(idGerado, usuario.Nome);
+                }
+            }
+            return null;
         }
+
+
 
         public List<Usuario> Listar()
         {
@@ -50,9 +74,49 @@ namespace WebAPI.Repository
             return lista;
         }
 
+        public Usuario ObterPorId(long id)
+        {
+            try
+            {
+                using (var conn = _connection.CreateConnection())
+                {
+                    var command = conn.CreateCommand();
+                    command.CommandText = "SELECT IDUSUARIO, NOME FROM USUARIOS WHERE IDUSUARIO = :id";
+                    command.Parameters.Add("id", id);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Usuario usuario = new Usuario(long.Parse(reader[0].ToString()), reader[1].ToString());
+                        return usuario;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao buscar usuario por id", ex);
+            }
+        }
+
         public bool Remover(Usuario usuario)
         {
             throw new NotImplementedException();
+        }
+
+        public bool Remover(long id)
+        {
+            using (var conn = _connection.CreateConnection())
+            {
+                var command = conn.CreateCommand();
+                command.CommandText = "DELETE FROM USUARIOS WHERE IDUSUARIO = :id";
+                command.Parameters.Add("id", id);
+                int afetado = command.ExecuteNonQuery();
+                if (afetado > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

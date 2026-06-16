@@ -6,12 +6,13 @@ namespace WebAPI.Controllers
 {
     public class UsuarioController : Controller
     {
+        
         private readonly UsuarioRepository _usuarioRepository;
-
         public UsuarioController(UsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }
+
 
         public IActionResult Listar()
         {
@@ -25,9 +26,12 @@ namespace WebAPI.Controllers
             return View(lista);
         }
 
+
         public IActionResult Cadastrar()
         {
             return View();
         }
+
+
     }
 }

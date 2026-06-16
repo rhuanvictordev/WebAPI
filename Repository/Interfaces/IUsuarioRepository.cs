@@ -1,12 +1,14 @@
-﻿using WebAPI.Models;
+﻿using WebAPI.DTOs;
+using WebAPI.Models;
 
 namespace WebAPI.Repository.Interfaces
 {
     public interface IUsuarioRepository
     {
         public List<Usuario> Listar();
-        public Usuario Criar(Usuario usuario);
+        public Usuario Criar(UsuarioDTO usuario);
+        public Usuario ObterPorId(long id);
         public bool Atualizar(Usuario novoUsuario);
-        public bool Remover(Usuario usuario);
+        public bool Remover(long id);
     }
 }

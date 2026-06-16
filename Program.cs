@@ -13,6 +13,8 @@ namespace WebAPI
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<DBConnection>();
             builder.Services.AddScoped<UsuarioRepository>();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -26,9 +28,11 @@ namespace WebAPI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseAuthorization();
-            app.MapRazorPages();
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
             app.Run();
         }
     }
