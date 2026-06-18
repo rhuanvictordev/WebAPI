@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             if (usuario != null)
                 return View(usuario);
 
-            return View("Listar");
+            return RedirectToAction("Listar");
         }
 
         [HttpPost]
